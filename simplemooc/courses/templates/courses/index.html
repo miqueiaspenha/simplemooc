@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block container %}
+
+<h1>Courses</h1>
+
+<ul style="list-style-type: none;">
+{% for course in courses %}
+	<li>
+		<p>{{ course.name }}</p>
+		<a href="{{ course.get_absolute_url }}">
+			{% if course.image %}
+				<img src="{{course.image.url}}" alt="{{course.name}}"> 
+			{% else %}
+				<img src="{% static 'images/default_logo.png' %}" alt="{{course.name}}">  
+			{% endif %}
+		</a>
+		<br> 
+		{{ course.description }} {{ course.start_date }}
+	</li>
+	<br/>
+{% empty %}
+	<li>Não existem cursos disponíveis no momento!</li>
+{% endfor %}
+</ul>
+
+
+{% endblock container %}

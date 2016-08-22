@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block container %}
+
+<p>{{course}}</p>
+
+{% if course.image %}
+<p><img src="{{course.image.url}}" alt="course"></p>
+{% else %}
+<p><img src="{% static 'images/default_logo.png' %}" alt="course"></p>
+{% endif %}
+
+<p>{{course.description}}</p>
+
+<p>{{course.about|linebreaks}}</p>
+
+{% endblock container %}
