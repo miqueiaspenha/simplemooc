@@ -135,3 +135,5 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = "miqueiaspenha@gmail.com"
 EMAIL_HOST_PASSWORD = "senha"
 EMAIL_PORT = 587
+
+CONTACT_EMAIL = 'miqueiaspenha@gmail.com'
