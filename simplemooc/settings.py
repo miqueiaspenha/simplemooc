@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'simplemooc.core',
     'simplemooc.courses',
+    'simplemooc.accounts',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -137,3 +138,8 @@ EMAIL_HOST_PASSWORD = "senha"
 EMAIL_PORT = 587
 
 CONTACT_EMAIL = 'miqueiaspenha@gmail.com'
+
+# auth
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'core:home'
+LOGOUT_URL = 'accounts:logout'
