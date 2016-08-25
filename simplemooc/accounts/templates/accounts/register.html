@@ -3,14 +3,14 @@
 {% block container %}
 <div class="">
   <form class="" action="" method="post">
-    {{ form.non_field_errors }}
     {% csrf_token %}
+    {{ form.non_field_errors }}
     {% for field in form %}
+      {{ field.errors }}
       {{ field.label_tag }}
       {{ field }}
-      {{ field.errors }}
     {% endfor %}
-    <input type="submit" value="Logar">
+    <input type="submit" name="cadastrar" value="Cadastrar">
   </form>
 </div>
 {% endblock container %}
