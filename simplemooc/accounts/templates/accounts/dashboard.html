@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block container %}
+
+{% block breadcrumb %}
+<a href="{% url 'accounts:dashboard' %}">Meu Painel</a>
+{% endblock breadcrumb %}
+
+{% block dashboard_content %}
+<ul>
+  <li>Nome: {{ user }}</li>
+  <li>Email: {{ user.email }}</li>
+</ul>
+{% endblock dashboard_content %}
+
+<ul>
+  <li>Meus Cursos: {{ cursos }}</li>
+  <li>Minha Conta: {{ conta }}</li>
+  <ul>
+    <li><a href="{% url 'accounts:edit' %}">Editar Conta</a></li>
+    <li><a href="{% url 'accounts:edit_password' %}">Editar Senha</a></li>
+  </ul>
+</ul>
+{% endblock container %}

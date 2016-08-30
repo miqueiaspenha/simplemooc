@@ -46,6 +46,17 @@
 					<li class="pure-menu-item">
 						<a href="{% url 'core:contato' %}" class="pure-menu-link">Contato</a>
 					</li>
+					<li class="pure-menu-item">
+						<a href="{% url 'courses:index' %}" class="pure-menu-link">Cursos</a>
+					</li>
+					<li class="pure-menu-item">
+						{% if user.is_authenticated %}
+						<a href="{% url 'accounts:dashboard' %}" class="pure-menu-link">Painel</a>
+						<a href="{% url 'accounts:logout' %}" class="pure-menu-link">Sair</a>
+						{% else %}
+						<a href="{% url 'accounts:login' %}" class="pure-menu-link">Entrar</a>
+						{% endif %}
+					</li>
 				</ul>
 			</div>
 		</div>

@@ -1,0 +1,28 @@
+{% extends "accounts/dashboard.html" %}
+
+{% block breadcrumb %}
+  {{ block.super }} / <a href="{% url 'accounts:edit' %}">Editar Conta</a>
+{% endblock breadcrumb %}
+
+{% block dashboard_content %}
+<br/>
+<br/>
+{{ form.non_field_errors }}
+<form action="" method="post">
+  {% csrf_token %}
+  {% if success %}
+      <p>
+        Os dados foram alterados com sucesso
+      </p>
+  {% endif %}
+
+  {% for field in form %}
+    {{ field.label }}
+    {{field}}
+    {{ field.errors }}
+    <br/>
+    <br/>
+  {% endfor %}
+  <input type="submit" value="Alterar Dados">
+</form>
+{% endblock dashboard_content %}
