@@ -2,6 +2,12 @@
 
 {% block container %}
 
+{% for message in messages %}
+<p>
+  {{message}}
+</p>
+{% endfor %}
+
 {% block breadcrumb %}
 <a href="{% url 'accounts:dashboard' %}">Meu Painel</a>
 {% endblock breadcrumb %}

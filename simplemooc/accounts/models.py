@@ -5,6 +5,8 @@ from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin, User
 from django.core import validators
 from django.conf import settings
 
+from simplemooc.courses.models import Course
+
 class User(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(
