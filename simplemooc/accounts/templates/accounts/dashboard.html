@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load courses_tags %}
+
 {% block container %}
 
 {% for message in messages %}
@@ -20,7 +22,20 @@
 {% endblock dashboard_content %}
 
 <ul>
+  <li>Meus Curso (Assinatura)</li>
+  <ul>
+    {% load_my_courses user as enrollments %}
+    {% for enrollment in enrollments %}
+        <li>{{ enrollment.course }}</li>
+    {% endfor %}
+  </ul>
+</ul>
+
+<ul>
   <li>Meus Cursos: {{ cursos }}</li>
+
+  {% my_courses user %}
+
   <li>Minha Conta: {{ conta }}</li>
   <ul>
     <li><a href="{% url 'accounts:edit' %}">Editar Conta</a></li>

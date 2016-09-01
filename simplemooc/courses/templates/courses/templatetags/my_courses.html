@@ -1,0 +1,7 @@
+<ul>
+  {% for enrollment in enrollments %}
+    <li>{{ enrollment.course }}</li>
+  {% empty %}
+    <li>Nenhum curso encontrado</li>
+  {% endfor %}
+</ul>
