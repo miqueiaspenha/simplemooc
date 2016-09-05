@@ -22,11 +22,11 @@
 {% endblock dashboard_content %}
 
 <ul>
-  <li>Meus Curso (Assinatura)</li>
+  <li>Meus Cursos (Assinatura)</li>
   <ul>
     {% load_my_courses user as enrollments %}
     {% for enrollment in enrollments %}
-        <li>{{ enrollment.course }}</li>
+        <li><a href="{% url 'courses:announcements' enrollment.course.slug  %}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> {{ enrollment.course }}</a></li>
     {% endfor %}
   </ul>
 </ul>
@@ -36,10 +36,24 @@
 
   {% my_courses user %}
 
+  {% block menu_options %}
   <li>Minha Conta: {{ conta }}</li>
   <ul>
-    <li><a href="{% url 'accounts:edit' %}">Editar Conta</a></li>
-    <li><a href="{% url 'accounts:edit_password' %}">Editar Senha</a></li>
+    <li><a href="{% url 'accounts:edit' %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar Conta</a></li>
+    <li><a href="{% url 'accounts:edit_password' %}"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Editar Senha</a></li>
   </ul>
+  {% endblock menu_options %}
 </ul>
+
+<h2>Meus Cursos</h2>
+<ul>
+{% for enrollment in enrollments %}
+<li>{{ enrollment.course }} - {{enrollment.course.start_date|date:'d-m-Y'|default:'Sem data'}}</li>
+<li>{{ enrollment.course.description|linebreaks }}</li>
+<a href="{% url 'courses:announcements' enrollment.course.slug %}">Acessar</a> | <a href="{% url 'courses:undo_enrollment' enrollment.course.slug %}">Cancelar</a>
+{% empty %}
+<p>Você não está inscrito em nenhum curso no momento</p>
+{% endfor %}
+</ul>
+
 {% endblock container %}
