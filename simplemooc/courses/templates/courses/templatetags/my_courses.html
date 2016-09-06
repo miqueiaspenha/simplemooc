@@ -1,6 +1,6 @@
 <ul>
   {% for enrollment in enrollments %}
-    <li>{{ enrollment.course }}</li>
+    <li><a href="#"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> {{ enrollment.course }}</a></li>
   {% empty %}
     <li>Nenhum curso encontrado</li>
   {% endfor %}

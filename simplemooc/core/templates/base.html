@@ -1,81 +1,81 @@
-<!doctype html>
-
 {% load static %}
 
+<!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
 
-	<title>Responsive Side Menu &ndash; Layout Examples &ndash; Pure</title>
+    <title>Simplemooc</title>
 
-	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
-	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/navbar-static-top.css' %}" rel="stylesheet">
 
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="/combo/1.18.13?/css/layouts/side-menu-old-ie.css">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="http://purecss.io/combo/1.18.13?/css/layouts/side-menu.css">
-    <!--<![endif]-->
+  </head>
 
-	<!--[if lt IE 9]>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script>
-    <![endif]-->
+  <body>
 
-</head>
-<body>
-
-	<div id="layout">
-		<!-- Menu toggle -->
-		<a href="#menu" id="menuLink" class="menu-link">
-			<!-- Hamburger icon -->
-			<span></span>
-		</a>
-
-		<div id="menu">
-			<div class="pure-menu">
-				<a class="pure-menu-heading" href="{% url 'core:home' %}">Meu Site</a>
-
-				<ul class="pure-menu-list">
-					<li class="pure-menu-item">
-						<a href="{% url 'core:home' %}" class="pure-menu-link">Home</a>
-					</li>
-					<li class="pure-menu-item">
-						<a href="{% url 'core:contato' %}" class="pure-menu-link">Contato</a>
-					</li>
-					<li class="pure-menu-item">
-						<a href="{% url 'courses:index' %}" class="pure-menu-link">Cursos</a>
-					</li>
-					<li class="pure-menu-item">
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Simplemooc</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{% url 'core:home' %}">Home</a></li>
+            <li><a href="{% url 'courses:index' %}">Cursos</a></li>
+            <li><a href="{% url 'core:contact' %}">Contato</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
 						{% if user.is_authenticated %}
-						<a href="{% url 'accounts:dashboard' %}" class="pure-menu-link">Painel</a>
-						<a href="{% url 'accounts:logout' %}" class="pure-menu-link">Sair</a>
+						<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'accounts:dashboard' %}">Painel</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{% url 'accounts:logout' %}">Sair</a></li>
+              </ul>
+            </li>
 						{% else %}
-						<a href="{% url 'accounts:login' %}" class="pure-menu-link">Entrar</a>
+						<li><a href="{% url 'accounts:login' %}">Login</a></li>
 						{% endif %}
-					</li>
-				</ul>
-			</div>
-		</div>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
 
-		<div id="main">
-			<div class="header">
-				<h1>Page Title</h1>
-				<h2>A subtitle for your page goes here</h2>
-			</div>
-			<div class="content">
-				<p>
-				  Bem vindo, {{ user }}
-				</p>
-			{% block container %}{% endblock %}
-			</div>
-		</div>
-	</div>
+    <div class="container">
+			{% block container %}{% endblock container %}
+    </div> <!-- /container -->
 
-	<script src="http://purecss.io/combo/1.18.13?/js/ui.js"></script>
 
-</body>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </body>
 </html>
