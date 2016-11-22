@@ -73,6 +73,9 @@ def announcements(request, slug):
 		if not enrollment.is_approved():
 			messages.error(request, 'A sua inscrição está pendente')
 			redirect('accounts:dashboard')
-	template_name = 'courses/announcements.html'
-	context['course'] = course
+	template_name = 'courses/announcements.html'	
+	context = {
+		'course' : course,
+		'announcements': course.announcements.all()
+	}
 	return render(request, template_name, context)
