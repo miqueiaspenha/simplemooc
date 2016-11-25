@@ -8,10 +8,14 @@
 {% block menu_options %}
 	<h3>{{ course }}</h3>
 	<ul>
-		<li>Aulas e Materiais</li>
+		<li>
+			<a href="{% url 'courses:lessons' course.slug %}">Aulas e Materiais</a>			
+		</li>
 		<li>Informações</li>
-		<li>Anúncios</li>
+		<li>
+			<a href="{% url 'courses:announcements' course.slug %}">Anúncios</a>
+		</li>
 		<li>Forúm de Dúvidas</li>
 	</ul>
-{{ block.super }}
+	{{ block.super }}
 {% endblock menu_options %}

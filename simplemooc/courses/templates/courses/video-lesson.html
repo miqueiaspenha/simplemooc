@@ -1,0 +1,18 @@
+{% extends "courses/course_dashboard.html" %}
+
+{% block breadcrumb %}
+    {{ block.super }}
+    / <a href="{% url 'courses:lessons' course.slug %}">Aulas</a>
+    / <a href="{% url 'courses:lesson' course.slug lesson.pk %}">{{ lesson }}</a>
+    / <a href="{% url 'courses:material' course.slug material.pk %}">{{ material }}</a>
+{% endblock breadcrumb %}
+
+{% block dashcoard_content %}
+	<dir class="well">
+		<h2><a href="{% url 'courses:material' course.slug material.pk %}">{{ material }}</a></h2>
+		{{ material.embedded|safe }}
+		<p>
+			<a href="{% url 'courses:lesson' course.slug lesson.pk %}">Voltar</a>
+		</p>
+	</dir>
+{% endblock dashcoard_content %}

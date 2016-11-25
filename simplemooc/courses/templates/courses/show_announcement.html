@@ -1,0 +1,48 @@
+{% extends "courses/course_dashboard.html" %}
+
+{% block breadcrumb %}
+    {{ block.super }}
+    / <a href="{% url 'courses:show_announcement' course.slug announcement.pk %}">{{ announcement }}</a>
+{% endblock breadcrumb %}
+
+{% block dashboard_content %}
+    <div class="well">
+        <h2>{{ announcement.title }}</h2>
+        <p>
+            {{ announcement.content|linebreaks }}
+        </p>
+    </div>
+    <div class="well">
+        <h4>
+            <a class="fright" href="">Comentar</a>
+        </h4>
+        <hr />
+        {% for comment in announcement.comments.all %}
+            <p>
+                <strong>{{ comment.user }}</strong> disse  à {{ comment.created_at|timesince }} atrás: <br/>
+                {{ comment.comment|linebreaksbr }}
+            </p>
+            <hr>
+            {% empty %}
+            <p>
+                Nenhum comentário para este anúncio.
+            </p>
+        {% endfor %}
+        <form method="post" class="" id="add_comment">
+            {% csrf_token %}
+            <fieldset>
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                <div>
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
+                {% endfor %}                
+                <div>
+                    <button type="submit">Enviar</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock dashboard_content %}
