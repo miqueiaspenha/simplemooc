@@ -1,17 +1,21 @@
 {% extends "base.html" %}
 
+{% load widget_tweaks %}
+
 {% block container %}
-<div class="">
-  <form class="" action="" method="post">
-    {{ form.non_field_errors }}
-    {% csrf_token %}
-    {% for field in form %}
-      {{ field.label_tag }}
-      {{ field }}
-      {{ field.errors }}
-    {% endfor %}
-    <input type="submit" value="Logar">
-  </form>
+<div class="row">
+  <div class="col-md-12">
+    <form class="" action="" method="post">
+      {{ form.non_field_errors }}
+      {% csrf_token %}
+      {% for field in form %}
+        {{ field.label_tag }}
+        {{ field|add_class:"form-control" }}
+        {{ field.errors }}
+      {% endfor %}
+      <input type="submit" value="Logar">
+    </form>
+  </div>
 </div>
 
 <a href="{% url 'accounts:register' %}">Cadastrar</a>

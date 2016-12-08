@@ -2,44 +2,55 @@
 
 {% load static %}
 
+{% load widget_tweaks %}
+
 {% block container %}
 
-<p>{{course}}</p>
+<h3>{{course}}</h3>
 
-<a href="#contato" class="pure-button">Dúvidas</a>
+<div class="row">
+	<div class="col-md-12 text-center">
+		{% if course.image %}
+		<img src="{{course.image.url}}" alt="course">
+		{% else %}
+		<img src="{% static 'images/default_logo.png' %}" alt="course">
+		{% endif %}	
+	</div>
+	<div class="col-md-12">
+		<p><strong>Descrição:</strong> {{course.description}}</p>
+		<h4>Sobre o curso:</h4>
+		<p>{{course.about|linebreaks}}</p>		
+	</div>
+	<div class="col-md-12">
+		<a href="{% url 'courses:enrollment' course.slug %}" class="btn btn-primary">Inscreva-se</a>	
+	</div>
+	<div class="col-md-12 text-center">
+		<h2>Tire suas dúvidas sobre o Curso</h2>		
+	</div>
+	<div class="col-md-6 col-md-offset-3">
+		{% if is_valid %}
+		<p>Você enviou o formulário com sucesso.</p>
+		{% endif %}
+		<form action="#contato" method="post">
+			{% csrf_token %}
+			{% for field in form %}
+				{{ field.label_tag }}
+				{{ field|add_class:"form-control" }}
+				{% if field.errors %}
+					{% for error in field.errors %}
+						<p>{{ error }}</p>
+					{% endfor %}
+				{% endif %}
+				<br>
+			{% endfor %}
+			<button type="submit" class="btn btn-primary">Enviar</button>
+		</form>
+	</div>
+</div>
 
-{% if course.image %}
-<p><img src="{{course.image.url}}" alt="course"></p>
-{% else %}
-<p><img src="{% static 'images/default_logo.png' %}" alt="course"></p>
-{% endif %}
 
-<p>{{course.description}}</p>
-<p>
-	<a href="{% url 'courses:enrollment' course.slug %}">Inscreva-se</a>
-</p>
-
-<p>{{course.about|linebreaks}}</p>
 
 <div id="contato">
-<p>Tire suas dúvidas sobre o Curso</p>
-{% if is_valid %}
-<p>Você enviou o formulário com sucesso.</p>
-{% endif %}
-<form action="#contato" method="post">
-	{% csrf_token %}
-	{% for field in form %}
-		{{ field.label_tag }}
-		{{ field }}
-		{% if field.errors %}
-			{% for error in field.errors %}
-				<p>{{ error }}</p>
-			{% endfor %}
-		{% endif %}
-		<br>
-	{% endfor %}
-	<button type="submit">Enviar</button>
-</form>
 </div>
 
 {% endblock container %}
