@@ -2,24 +2,94 @@
 
 {% load courses_tags %}
 
+{% load widget_tweaks %}
+
 {% block container %}
+
+{% load_my_courses user as enrollments %}
+
+<ol class="breadcrumb">  
+{% block breadcrumb %}
+  <li><a href="{% url 'accounts:dashboard' %}">Meu Painel</a></li>
+{% endblock breadcrumb %}
+</ol>
+
+<div class="row row-offcanvas row-offcanvas-right">
+  
+  <div class="col-md-9">
+
+    <div class="row">
+        <div class="col-md-12">
+            {% block dashboard_content %}
+            <ul class="list-group">
+              <li class="list-group-item active">Meus Dados</li>
+              <li class="list-group-item">Nome: {{ user }}</li>
+              <li class="list-group-item">Email: {{ user.email }}</li>
+            </ul>
+            {% endblock dashboard_content %}
+        </div>
+
+        {% for enrollment in enrollments %}
+        <div class="col-md-12">
+            <ul class="list-group">
+                <li class="list-group-item active" >Curso: {{ enrollment.course }}</li>
+                <li class="list-group-item">Inicio: {{enrollment.course.start_date|date:'d-m-Y'|default:'Sem data'}}</li>
+                <li class="list-group-item">{{ enrollment.course.description }}</li>
+                <li class="list-group-item">
+                <a href="{% url 'courses:announcements' enrollment.course.slug %}" class="btn btn-primary">Acessar</a>
+                <a href="{% url 'courses:undo_enrollment' enrollment.course.slug %}" class="btn btn-danger">Cancelar</a>
+                </li>                
+            </ul>
+        </div>
+        {% empty %}
+        <div class="col-md-12">
+            <ul class="list-group">
+                <li class="list-group-item"><p>Você não está inscrito em nenhum curso no momento</p></li>
+            </ul>
+        </div>
+        {% endfor %}        
+    </div>
+
+  </div>
+
+  <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="list-group">
+                <span href="#" class="list-group-item active">Meus Cursos</span>
+                {% for enrollment in enrollments %}
+                <a href="{% url 'courses:announcements' enrollment.course.slug  %}" class="list-group-item">
+                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                    {{ enrollment.course }}
+                </a>
+                {% endfor %}      
+            </div>
+        </div>
+        <div class="col-md-12">
+
+            <div class="list-group">
+                <span href="#" class="list-group-item active">Minha Conta: {{ conta }}</span>             
+                <a href="{% url 'accounts:edit' %}" class="list-group-item">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 
+                    Editar Conta
+                </a>
+                <a href="{% url 'accounts:edit_password' %}" class="list-group-item">
+                    <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> 
+                    Editar Senha
+                </a>
+            
+            </div>
+        </div>
+    </div>
+   </div><!--/.sidebar-offcanvas-->
+
+</div>
 
 {% for message in messages %}
 <p>
   {{message}}
 </p>
-{% endfor %}
-
-{% block breadcrumb %}
-<a href="{% url 'accounts:dashboard' %}">Meu Painel</a>
-{% endblock breadcrumb %}
-
-{% block dashboard_content %}
-<ul>
-  <li>Nome: {{ user }}</li>
-  <li>Email: {{ user.email }}</li>
-</ul>
-{% endblock dashboard_content %}
+{% endfor %}    
 
 <ul>
   <li>Meus Cursos (Assinatura)</li>
@@ -31,29 +101,9 @@
   </ul>
 </ul>
 
-<ul>
-  <li>Meus Cursos: {{ cursos }}</li>
+{% my_courses user %}
 
-  {% my_courses user %}
-
-  {% block menu_options %}
-  <li>Minha Conta: {{ conta }}</li>
-  <ul>
-    <li><a href="{% url 'accounts:edit' %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar Conta</a></li>
-    <li><a href="{% url 'accounts:edit_password' %}"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Editar Senha</a></li>
-  </ul>
-  {% endblock menu_options %}
-</ul>
-
-<h2>Meus Cursos</h2>
-<ul>
-{% for enrollment in enrollments %}
-<li>{{ enrollment.course }} - {{enrollment.course.start_date|date:'d-m-Y'|default:'Sem data'}}</li>
-<li>{{ enrollment.course.description|linebreaks }}</li>
-<a href="{% url 'courses:announcements' enrollment.course.slug %}">Acessar</a> | <a href="{% url 'courses:undo_enrollment' enrollment.course.slug %}">Cancelar</a>
-{% empty %}
-<p>Você não está inscrito em nenhum curso no momento</p>
-{% endfor %}
-</ul>
+{% block menu_options %}
+{% endblock menu_options %}  
 
 {% endblock container %}

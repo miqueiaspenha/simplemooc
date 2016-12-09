@@ -4,20 +4,30 @@
 
 {% block container %}
 <div class="row">
-  <div class="col-md-12">
-    <form class="" action="" method="post">
-      {{ form.non_field_errors }}
-      {% csrf_token %}
-      {% for field in form %}
-        {{ field.label_tag }}
-        {{ field|add_class:"form-control" }}
-        {{ field.errors }}
-      {% endfor %}
-      <input type="submit" value="Logar">
-    </form>
-  </div>
+    <div class="col-md-6 col-md-offset-3">
+        <form class="" action="" method="post">
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <div class="alert alert-success" role="alert">
+                    {{ error }}
+                </div>
+                {% endfor %}
+            {% endif %}
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                {{ field.label_tag }}
+                {{ field|add_class:"form-control" }}
+                {{ field.errors }}
+                </div>
+            {% endfor %}
+            <input type="submit" class="btn btn-primary" value="Logar">
+            <a href="{% url 'accounts:register' %}" class="btn btn-info" role="button">Cadastrar</a>
+            <a href="{% url 'accounts:password_reset' %}" class="btn btn-warning" role="button">Recuperar Senha</a>
+        </form>
+    </div>  
+<div class="col-md-12">
+    
 </div>
-
-<a href="{% url 'accounts:register' %}">Cadastrar</a>
-<a href="{% url 'accounts:password_reset' %}">Recuperar Senha</a>
+</div>
 {% endblock container %}

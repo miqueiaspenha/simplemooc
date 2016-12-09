@@ -4,26 +4,24 @@
 
 {% block container %}
 
-<h1>Cursos</h1>
+<h1>Cursos Disponíveis</h1>
 
 <div class="row">
 {% for course in courses %}
 	<div class="col-md-4">
-		<h3>{{ course.name }}</h3>
-		
+		<div class="thumbnail">
 			{% if course.image %}
-				<img src="{{course.image.url}}" alt="{{course.name}}"> 
+			<img src="{{course.image.url}}" class="img-responsive" alt="{{course.name}}"> 
 			{% else %}
-				<img src="{% static 'images/default_logo.png' %}" alt="{{course.name}}">  
+			<img src="{% static 'images/default_logo.png' %}" class="img-responsive" alt="{{course.name}}">  
 			{% endif %}
-		<p>Começa em:
-		{% if course.start_date %}
-			<strong>{{ course.start_date }}</strong>
-		{% else %}
-			<strong>Sem data marcada.</strong>
-		{% endif %}
-		</p>
-		<p>{{ course.description }} <a href="{{ course.get_absolute_url }}" class="btn btn-primary btn-xs">Saiba Mais</a></p>
+			<div class="caption">
+				<h3>{{ course.name }}</h3>
+				<p>{{ course.description }}</p>
+				<p>Início: {% if course.start_date %}<strong>{{ course.start_date }}</strong>{% else %}<strong>Sem data marcada.</strong>{% endif %}</p>
+				<p><a href="{{ course.get_absolute_url }}" class="btn btn-primary">Saiba Mais</a></p>
+			</div>
+		</div>
 	</div>
 {% empty %}
 	<p>Não existem cursos disponíveis no momento!</p>
